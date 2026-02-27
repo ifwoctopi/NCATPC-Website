@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>North Carolina A&T Poker Club</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #0a1f44, #020617);
+      overflow-x: hidden;
+    }
+
+    .playing-card {
+      width: 80px;
+      height: 120px;
+      background: linear-gradient(145deg, #ffffff, #e5e7eb);
+      border-radius: 12px;
+      position: absolute;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-weight: bold;
+      color: #1f2937;
+      opacity: 0;
+      animation: dealIn 0.8s ease-out forwards, float 8s 1s infinite ease-in-out;
+      translate: var(--px,0) var(--py,0);
+    }
+
+    .suit { font-size: 28px; text-align: center; }
+    .rank { font-size: 18px; }
+
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(10deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    .poker-chip {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #facc15 40%, #b45309 100%);
+      border: 6px dashed white;
+      position: absolute;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.6);
+      animation: spin 12s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .flip-card { background-color: transparent; perspective: 1000px; }
+    .flip-inner { position: relative; width: 100%; height: 500px; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
+    .flip-card:hover .flip-inner { transform: rotateY(180deg); }
+    .flip-front, .flip-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 1rem; }
+    .flip-front { background: #020617; }
+    .flip-back { background: #0a1f44; transform: rotateY(180deg); }
+
+    .layer { will-change: transform; transition: transform 0.2s ease-out; cursor: grab; }
+    .layer.dragging { cursor: grabbing; }
+
+    @keyframes dealIn {
+      0% { transform: translateY(-120px) rotate(-20deg); opacity:0; }
+      100% { transform: translateY(0px) rotate(0deg); opacity:1; }
+    }
+
+    .hero {
+      background:
+        radial-gradient(#0f5132 2px, transparent 2px),
+        radial-gradient(#0f5132 2px, transparent 2px),
+        linear-gradient(135deg, #0a1f44, #020617);
+      background-position: 0 0, 10px 10px, 0 0;
+      background-size: 20px 20px, 20px 20px, cover;
+    }
+
+    html { scroll-behavior: smooth; }
+    section { scroll-margin-top: 110px; }
+  </style>
+</head>
+<body class="text-white font-sans">
+
+<!-- Floating Cards -->
+<div class="playing-card layer" style="top:18%; left:4%">
+  <div class="rank">A</div>
+  <div class="suit text-black">♠</div>
+  <div class="rank self-end">A</div>
+</div>
+<div class="playing-card layer" style="top:22%; right:8%">
+  <div class="rank text-red-600">Q</div>
+  <div class="suit text-red-600">♦</div>
+  <div class="rank text-red-600 self-end">Q</div>
+</div>
+<div class="playing-card layer" style="top:55%; left:75%">
+  <div class="rank text-red-600">K</div>
+  <div class="suit text-red-600">♥</div>
+  <div class="rank text-red-600 self-end">K</div>
+</div>
+<div class="playing-card layer" style="top:65%; left:10%">
+  <div class="rank">J</div>
+  <div class="suit text-black">♣</div>
+  <div class="rank self-end">J</div>
+</div>
+
+<!-- Floating Chips -->
+<div class="poker-chip layer" style="top:60%; right:5%; z-index:0"></div>
+<div class="poker-chip layer" style="top:72%; left:25%; z-index:0"></div>
+<div class="poker-chip layer" style="top:30%; left:40%; z-index:0"></div>
+<div class="poker-chip layer" style="top:15%; right:35%; z-index:0"></div>
+
+<!-- Navigation Bar with Logo Space -->
+<nav class="p-6 flex justify-between items-center bg-blue-950 bg-opacity-60 backdrop-blur-md fixed w-full z-10">
+  <div class="flex items-center space-x-4">
+    <img src="src/assets/img/logo.PNG" alt="NCAT Poker Club Logo" class="h-10 w-10 object-contain" />
+    <h1 class="text-2xl font-bold text-yellow-400">NCAT Poker Club</h1>
+  </div>
+  <div class="space-x-6">
+    <a href="#about" class="hover:text-yellow-300">About</a>
+    <a href="#officers" class="hover:text-yellow-300">Officers</a>
+    <a href="#sponsors" class="hover:text-yellow-300">Sponsors</a>
+  </div>
+</nav>
+
+<section class="hero h-screen flex flex-col justify-center items-center text-center px-4">
+  <h2 class="text-5xl font-bold text-yellow-400 mb-4">Welcome to the Table</h2>
+  <p class="max-w-xl text-lg">The official poker community at North Carolina A&T State University.</p>
+</section>
+
+<section id="about" class="py-20 px-8 bg-blue-900 bg-opacity-40">
+  <h2 class="text-4xl font-bold text-yellow-400 mb-6">About Us</h2>
+  <div class="flex flex-col md:flex-row md:items-start md:space-x-8">
+    <div class="md:flex-1">
+      <p class="max-w-3xl">The North Carolina A&T Poker Club creates a social and educational environment for students interested in the strategic and recreational aspects of poker. We promote responsible, skill-based gameplay through regular meetings, tournaments, and workshops that foster sportsmanship and critical thinking.</p>
+      <br>
+      <p class="max-w-3xl">Beyond the cards, we are committed to our members’ professional growth. By connecting strategic gameplay to real-world applications, we highlight how the competencies developed at the table, like risk assessment and emotional intelligence, translate to successful careers. Through networking, guest speakers, and alumni engagement, we help Aggies build transferable skills and expand their professional networks for life after graduation.</p>
+    </div>
+    <div class="md:flex-1 mt-8 md:mt-0 flex justify-center">
+      <!-- placeholder image -->
+      <div class="w-full max-w-md h-64 bg-gray-700 bg-opacity-0 rounded-lg flex items-center justify-center text-gray-300">
+        <img src="src/assets/img/logo.PNG" alt="NCAT Poker Club Logo" class="h-50 w-50 object-contain" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="officers" class="py-20 px-8">
+  <h2 class="text-4xl font-bold text-yellow-400 mb-10">Officers</h2>
+  <div class="grid md:grid-cols-4 gap-10">
+
+    <div class="flip-card">
+      <div class="flip-inner">
+        <div class="flip-front flex items-center justify-center">
+          <img src="src/assets/img/officer1.png" class="w-full h-full object-cover rounded-2xl" />
+        </div>
+        <div class="flip-back flex flex-col justify-center items-center p-4">
+          <h3 class="text-xl font-bold">President</h3>
+          <p>Ambrose Yancey</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card">
+      <div class="flip-inner">
+        <div class="flip-front flex items-center justify-center">
+          <img src="src/assets/img/officer2.jpg" class="w-full h-full object-cover rounded-2xl" />
+        </div>
+        <div class="flip-back flex flex-col justify-center items-center p-4">
+          <h3 class="text-xl font-bold">Vice President</h3>
+          <p>Staci Tranquille</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card">
+      <div class="flip-inner">
+        <div class="flip-front flex items-center justify-center">
+          <img src="src/assets/img/officer3.png" class="w-full h-full object-cover rounded-2xl" />
+        </div>
+        <div class="flip-back flex flex-col justify-center items-center p-4">
+          <h3 class="text-xl font-bold">Treasurer</h3>
+          <p>Darrell Pratt</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card">
+      <div class="flip-inner">
+        <div class="flip-front flex items-center justify-center">
+          <img src="src/assets/img/officer4.png" class="w-full h-full object-cover rounded-2xl" />
+        </div>
+        <div class="flip-back flex flex-col justify-center items-center p-4">
+          <h3 class="text-xl font-bold">Secretary</h3>
+          <p>Ryan Bolt</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="sponsors" class="py-20 px-8 bg-blue-900 bg-opacity-40">
+  <h2 class="text-4xl font-bold text-yellow-400 mb-10">Partners & Sponsors</h2>
+<!----
+  <div class="grid md:grid-cols-4 gap-6">
+    <div class="bg-white p-4 rounded-xl">
+      <img src="sponsor1.png" class="w-full h-24 object-contain" />
+    </div>
+    <div class="bg-white p-4 rounded-xl">
+      <img src="sponsor2.png" class="w-full h-24 object-contain" />
+    </div>
+    <div class="bg-white p-4 rounded-xl">
+      <img src="sponsor3.png" class="w-full h-24 object-contain" />
+    </div>
+    <div class="bg-white p-4 rounded-xl">
+      <img src="sponsor4.png" class="w-full h-24 object-contain" />
+    </div>
+  </div>
+  ---->
+  <p class="max-w-6xl">If you are interested in sponsoring the NCAT Poker Club or partnering with us for events, please reach out to us at <a href="mailto:ncat.pokerclub@gmail.com" class="text-yellow-400 hover:underline">ncat.pokerclub@gmail.com</a></p>
+</section>
+
+<section id="events" class="py-20 px-8">
+  <h2 class="text-4xl font-bold text-yellow-400 mb-10">Events</h2>
+  <div class="max-w-4xl mx-auto space-y-16">
+    <div>
+      <h3 class="text-2xl font-semibold text-white mb-6">Upcoming</h3>
+      <div class="grid gap-8 md:grid-cols-2">
+        <!-- flyer-sized card 1 -->
+        <div class="bg-blue-800 bg-opacity-50 rounded-lg overflow-hidden shadow-lg">
+          <img src="src/assets/img/event2.png" alt="Spring Tournament" class="w-full h-100 object-cover" />
+          <div class="p-4">
+            <p class="text-sm text-yellow-300">March 16, 2026</p>
+            <h4 class="text-lg font-semibold text-white">General Body Meeting</h4>
+            <p class="text-white text-sm mt-2">A night of poker and socializing!</p>
+          </div>
+        </div>
+        <!-- flyer-sized card 2 -->
+        <div class="bg-blue-800 bg-opacity-50 rounded-lg overflow-hidden shadow-lg">
+          <img src="src/assets/img/event3.png" alt="Strategy Workshop" class="w-full h-100 object-cover" />
+          <div class="p-4">
+            <p class="text-sm text-yellow-300">March 27, 2026</p>
+            <h4 class="text-lg font-semibold text-white">Casino Night</h4>
+            <p class="text-white text-sm mt-2">Join us for an evening of fun and games at the Student Center!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3 class="text-2xl font-semibold text-white mb-6">Past</h3>
+      <div class="grid gap-8 md:grid-cols-2">
+        <!-- regular card 3 -->
+        <div class="bg-blue-800 bg-opacity-50 rounded-lg overflow-hidden shadow-lg">
+          <img src="src/assets/img/event1.png" alt="Valentine's Charity Game" class="w-full h-40 object-cover" />
+          <div class="p-4">
+            <p class="text-sm text-yellow-300">February 16, 2026</p>
+            <h4 class="text-lg font-semibold text-white">First General Body Meeting</h4>
+            <p class="text-white text-sm mt-2">We had our first general body meeting where we had the director of cybersecurity at Metlife talk about their experience and advice for students interested in cybersecurity. We ended the night teaching scholars how to play poker and playing a few rounds.</p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="py-6 bg-blue-950 bg-opacity-80 backdrop-blur-md border-t border-yellow-400/40">
+  <div class="max-w-4xl mx-auto px-6 flex flex-col md:flex-row items-center justify-center gap-6 text-center text-sm">
+    <a href="mailto:pokerclub@ncat.edu" class="flex items-center gap-2 group transition">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-yellow-400 transition group-hover:drop-shadow-[0_0_6px_#facc15]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12H8m8 0l-4 4m4-4l-4-4m12 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2z" />
+      </svg>
+      <p class="group-hover:text-yellow-300">ncat.pokerclub@gmail.com</p>
+    </a>
+
+    <a href="https://www.instagram.com/ncat_pokerclub/" target="_blank" class="flex items-center gap-2 group transition">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-yellow-400 transition group-hover:drop-shadow-[0_0_6px_#facc15]" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M7.75 2C4.02 2 2 4.02 2 7.75v8.5C2 19.98 4.02 22 7.75 22h8.5C19.98 22 22 19.98 22 16.25v-8.5C22 4.02 19.98 2 16.25 2h-8.5zM12 7.5A4.5 4.5 0 1112 16.5 4.5 4.5 0 0112 7.5zm5.25-.75a1.125 1.125 0 110 2.25 1.125 1.125 0 010-2.25z"/>
+      </svg>
+      <p class="group-hover:text-yellow-300">@ncat_pokerclub</p>
+    </a>
+
+    <a href="https://groupme.com/join_group/112449712/99vSlw0Z" target="_blank" class="flex items-center gap-2 group transition">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-yellow-400 transition group-hover:drop-shadow-[0_0_6px_#facc15]" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M20.317 4.369A19.791 19.791 0 0016.558 3c-.197.352-.426.828-.583 1.2a18.27 18.27 0 00-5.95 0 12.42 12.42 12.42 0 00-.591-1.2 19.736 19.736 0 00-3.758 1.369C2.533 9.046 1.742 13.58 2.13 18.057a19.9 19.9 0 005.993 3.06c.483-.66.915-1.36 1.288-2.095a12.94 12.94 0 01-2.03-.97c.17-.125.337-.255.497-.39 3.917 1.84 8.16 1.84 12.03 0 .162.135.33.265.5.39a12.98 12.98 0 01-2.034.97c.373.735.805 1.435 1.29 2.095a19.86 19.86 0 005.99-3.06c.455-5.177-.79-9.672-3.337-13.688z"/>
+      </svg>
+      <p class="group-hover:text-yellow-300">Join our GroupMe !</p>
+    </a>
+  </div>
+</footer>
+
+<script>
+// simple parallax based on pointer movement and drag support
+const layers = document.querySelectorAll('.layer');
+let dragItem = null;
+let offsetX = 0, offsetY = 0;
+
+function onPointerMove(e) {
+  // update parallax even when dragging
+  const x = (e.clientX / window.innerWidth - 0.5) * 20;
+  const y = (e.clientY / window.innerHeight - 0.5) * 20;
+  layers.forEach((el, i) => {
+    const depth = parseFloat(el.dataset.depth || ((i % 5 + 1) * 0.5));
+    el.style.setProperty('--px', x * depth + 'px');
+    el.style.setProperty('--py', y * depth + 'px');
+  });
+
+  // drag handling
+  if (dragItem) {
+    dragItem.style.left = e.clientX - offsetX + 'px';
+    dragItem.style.top = e.clientY - offsetY + 'px';
+  }
+}
+
+document.addEventListener('pointermove', onPointerMove);
+
+document.addEventListener('pointerup', () => {
+  if (dragItem) {
+    dragItem.classList.remove('dragging');
+    dragItem = null;
+  }
+});
+
+layers.forEach(el => {
+  // give each layer a default depth if not set
+  if (!el.dataset.depth) el.dataset.depth = 1;
+  el.addEventListener('pointerdown', e => {
+    dragItem = el;
+    const rect = el.getBoundingClientRect();
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
+    el.classList.add('dragging');
+    e.preventDefault();
+  });
+  el.style.touchAction = 'none'; // disable native gestures
+});
+</script>
+</body>
+</html>
