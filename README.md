@@ -1,16 +1,26 @@
-# React + Vite
+# NCAT Poker Club Leaderboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite app with Supabase-backed leaderboard and admin controls.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Public leaderboard view from `public.leaderboard`
+- Signed avatar display from `private/pfp/*` storage paths
+- Admin button on the main page for login/logout
+- Admin-only add and remove actions for leaderboard rows
+- Modular code structure (no single giant file)
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Admin Usage
 
-## Expanding the ESLint configuration
+1. Open app.
+2. Click `Admin` in the header.
+3. Sign in with your account.
+4. Use the add form to enter first name, last name, username, score, and optional avatar image.
+5. Remove entries with the `Remove` button in the table.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Notes
+
+- The app uploads avatar files to `storage` bucket `private` under `pfp/`.
+- Signed URLs are generated for viewing avatars in the public leaderboard.
+- Vite 7 recommends Node `20.19+` or `22.12+`.

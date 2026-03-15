@@ -10,8 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.99.1",
+    "framer-motion": "^12.36.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-router-dom": "^6.28.2",
     "tailwind": "^4.0.0"
   },
   "devDependencies": {
