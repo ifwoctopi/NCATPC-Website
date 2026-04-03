@@ -8,6 +8,8 @@ import officer1 from '../assets/img/officer1.png';
 import officer2 from '../assets/img/officer2.jpg';
 import officer3 from '../assets/img/officer3.png';
 import officer4 from '../assets/img/officer4.png';
+import FINALGBM2 from '../assets/img/FINALGBM2.png';
+import PT from '../assets/img/PT.png';
 
 export default function HomePage() {
   useEffect(() => {
@@ -219,21 +221,21 @@ export default function HomePage() {
             <h3 className="text-2xl font-semibold text-white mb-6">Upcoming</h3>
             <div className="grid gap-8 md:grid-cols-2">
               <div className="bg-blue-800 bg-opacity-50 rounded-lg overflow-hidden shadow-lg">
-                <img src={event2} alt="General Body Meeting" className="w-full h-100 object-cover" />
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeYgRM4uSEGabIm5WOmK6gCPIU9P1cED_zBnKhvS_8HdT9ICQ/viewform?usp=header" target="_blank" rel="noopener noreferrer"><img src={FINALGBM2} alt="General Body Meeting" className="w-full h-100 object-cover" /></a>
                 <div className="p-4">
-                  <p className="text-sm text-yellow-300">March 16, 2026</p>
-                  <h4 className="text-lg font-semibold text-white">General Body Meeting</h4>
-                  <p className="text-white text-sm mt-2">A night of poker and socializing!</p>
+                  <p className="text-sm text-yellow-300">April 9th, 2026</p>
+                  <h4 className="text-lg font-semibold text-white">Final General Body Meeting</h4>
+                  <p className="text-white text-sm mt-2">Career Night! Join us for a panel discussion with an industry professional from NVIDIA, followed by a night of poker and socializing.</p>
                 </div>
               </div>
               <div className="bg-blue-800 bg-opacity-50 rounded-lg overflow-hidden shadow-lg">
                 <div className="event-flyer-frame">
-                  <img src={event5} alt="Online Poker Tournament" className="event-flyer-contained" />
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfcMvCE2jgfEdNzRy5LQHkC-IVkHDqF82ON2RSHPnqKlHlApw/viewform?usp=header" target="_blank" rel="noopener noreferrer"><img src={PT} alt="Poker Tournament" className="w-full h-100 object-cover" /> </a>
                 </div>
                 <div className="p-4">
-                  <p className="text-sm text-yellow-300">March 17, 2026</p>
-                  <h4 className="text-lg font-semibold text-white">Online Poker Tournament</h4>
-                  <p className="text-white text-sm mt-2">Join us for our first online poker tournament!</p>
+                  <p className="text-sm text-yellow-300">April 20th, 2026</p>
+                  <h4 className="text-lg font-semibold text-white">Poker Tournament</h4>
+                  <p className="text-white text-sm mt-2">Join us for our first annual poker tournament!</p>
                 </div>
               </div>
             </div>
